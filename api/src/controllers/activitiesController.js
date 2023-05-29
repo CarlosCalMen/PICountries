@@ -1,6 +1,6 @@
 const {Activity} = require('../db.js');
 
-const createActivity = async (name,difficulty,duration,season)=>{
+const createActivity = async (name,difficulty,duration,season,countries)=>{
 
     const [newActivity,created] = await (Activity.findOrCreate({where:{
                                                                 name,
@@ -8,6 +8,8 @@ const createActivity = async (name,difficulty,duration,season)=>{
                                                                 duration,
                                                                 season,
                                                             }}));
+    newActivity.addCountry(countries);
+    
     return newActivity;
 };
 

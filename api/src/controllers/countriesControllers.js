@@ -1,5 +1,5 @@
 const axios = require('axios');
-const {Country} = require ('../db.js');
+const {Country,Activity} = require ('../db.js');
 const {Op} = require('sequelize');
 const URL= 'https://rest-countries.up.railway.app/v3.1/all';
 
@@ -28,15 +28,13 @@ const saveApiData = async()=>{
 };
 
 const getCountriesByName = async(name)=>{
-    name=name[0].toUpperCase()+name.slice(1).toLowerCase();
-    let countries=await Country.findAll({where:{[Op.like]:`%${name}`}});
+    let countries=await Country.findAll({where:{name:{[Op.iLike]:`%${name}%`}}});
     return countries;
 };
 
 const getAllCountries = async()=>{
     let allCountries = await Country.findAll();
     if (allCountries.length<1){
-        // console.log('bbdd vacia');
         await saveApiData();
         allCountries = await Country.findAll()
     };
@@ -45,9 +43,18 @@ const getAllCountries = async()=>{
 
 const countryById = async (id)=>{
     id=id.toUpperCase();
-    const country = await Country.findByPk(id);
+    const country = await Country.findByPk(id,
+        {
+            include:{
+                model:Activity,
+                attributes:["name","difficulty","duration","season"],
+                though:{
+                    attributes:[]
+                }
+            }
+        });
     if (!country) throw new Error('No existe país con ese ID');
-    return country;//faltan las actividades turisicas
+    return country;
 };
 
 module.exports = {
