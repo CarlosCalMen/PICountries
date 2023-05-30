@@ -49,7 +49,7 @@ const countryById = async (id)=>{
                 model:Activity,
                 attributes:["name","difficulty","duration","season"],
                 though:{
-                    attributes:[]
+                    attributes:[],
                 }
             }
         });
