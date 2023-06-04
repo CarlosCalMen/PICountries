@@ -1,0 +1,15 @@
+.success{
+    border: 1px solid green;
+    background-color: rgb(158, 210, 158);
+    opacity:0.7;
+}
+
+.error{
+    border: 1px solid red;
+    background-color: rgb(245, 210, 210);
+    opacity:0.7;
+}
+
+.errorAlert{
+    color:red;
+}

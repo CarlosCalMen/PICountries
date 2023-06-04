@@ -8,5 +8,4 @@ countriesRouter.get('/',getCountries);
 
 countriesRouter.get('/:id',getCountryById);
 
-
 module.exports = countriesRouter;
